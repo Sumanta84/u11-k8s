@@ -1,0 +1,28 @@
+1. Win11-system32> kubectl get nodes
+=> showing control Plane and Worker-nodes,based on context location (can be window system host or remote host)
+
+2. Win11-system32> kubectl config view  (location: C:\Users\elphi\.kube\config.yml->for local-win-host,Created by Docker-Desktop-Kuberneties)
+=> Showing config file(yaml), using creation of cluster by KinD(K8S in Docker)
+
+3. Win11-system32> kubectl expalin pods
+=> Showing yaml-config file's create pod details of code minimum
+
+4. Win11-system32> kubectl expalin pods --recursive 
+=> Showing yaml-config file's create pod details of code all details
+
+----
+If I create cluster Linode-akamai Cloud, Then download and copy-paste the file(location: C:\Users\elphi\.kube\config.yml) same location and merge the file create environ variable name "KUBECONFIG"
+
+Using GitBash:-
+5. $export KUBECONFIG=~\.kube\config:~\.kube\linode-config
+=> merge the both file for temporery, if need it permanent we need to do the same in .bashrc folder (for linux)
+**temporery means when we kill the terminal it will destroy.
+
+6. $kubectl config view
+=> it's first search the "KUBECONFIG" environment variable then present config file..Showing yaml file code details and omit Certificate and Key value..
+
+7. $kubectl config view --flatten
+=> Showing yaml file code details and all Certificate and Key value
+
+8. $kubectl config view --flatten > config
+=> Delete local config file, we merged local-win-host+remote-LKE files...this command redirect the new merged code to new config file..and create parmanent.
