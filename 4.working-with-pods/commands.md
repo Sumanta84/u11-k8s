@@ -343,3 +343,6 @@ kubectl explain pods --recursive
 kubectl explain pods --recursive | more
 kubectl explain pod.metadata.managedFields.fieldsType
 kubectl explain pod.spec.restartPolicy
+kubectl config current-context
+kubectl apply -f ./4.working-with-pods/0.source-code/pod.yaml 
+kubectl get pods
