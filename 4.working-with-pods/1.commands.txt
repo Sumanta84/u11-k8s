@@ -1,0 +1,8 @@
+
+---
+kubectl apply -f initpod.yml
+kubectl get pods -o wide
+kubectl get pods --watch 
+---
+now open a different shell:
+kubectl describe pod initpod

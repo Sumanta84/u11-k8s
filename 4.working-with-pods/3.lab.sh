@@ -19,3 +19,163 @@ PID   USER     TIME  COMMAND
 elphi@DESKTOP-SGOQ3PJ MINGW64 ~/OneDrive/Desktop/u11-k8s (main)
 $ kubectl exec hello-pod -- sh -c 'echo $HOSTNAME'
 hello-pod
+---
+PS C:\Users\elphi> kubectl apply -f 'C:\Users\elphi\OneDrive\Desktop\u11-k8s\4.working-with-pods\0.source-code\initpod.yml'
+pod/initpod created
+PS C:\Users\elphi> kubectl get pods -o wide
+NAME        READY   STATUS     RESTARTS      AGE   IP           NODE              NOMINATED NODE   READINESS GATES
+hello-pod   1/1     Running    8 (71m ago)   9d    10.244.2.2   desktop-worker2   <none>           <none>
+initpod     0/1     Init:0/1   0             25s   10.244.1.2   desktop-worker    <none>           <none>
+PS C:\Users\elphi>  kubectl get pods --watch
+NAME        READY   STATUS     RESTARTS      AGE
+hello-pod   1/1     Running    8 (74m ago)   9d
+initpod     0/1     Init:0/1   0             3m22s
+
+---
+open new shell
+PS C:\Users\elphi> kubectl describe pod initpod
+Name:             initpod
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             desktop-worker/172.18.0.5
+Start Time:       Wed, 14 Oct 2026 07:13:17 +0530
+Labels:           app=initializer
+Annotations:      <none>
+Status:           Pending
+IP:               10.244.1.2
+IPs:
+  IP:  10.244.1.2
+Init Containers:
+  init-ctr:
+    Container ID:  containerd://db13747a0e8a7cb788cb38cbe3e10cb81fe1b2fce8a06b2aa2beec99a5886a06
+    Image:         busybox:1.28.4
+    Image ID:      docker.io/library/busybox@sha256:141c253bc4c3fd0a201d32dc1f493bcf3fff003b6df416dea4f41046e0f37d47
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      sh
+      -c
+      until nslookup k8sbook; do echo waiting for k8sbook service; sleep 1; done; echo Service found!
+    State:          Running
+      Started:      Wed, 14 Oct 2026 07:13:24 +0530
+    Ready:          False
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-shsrr (ro)
+Containers:
+  web-ctr:
+    Container ID:
+    Image:          nigelpoulton/web-app:1.0
+    Image ID:
+    Port:           8080/TCP
+    Host Port:      0/TCP
+    State:          Waiting
+      Reason:       PodInitializing
+    Ready:          False
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-shsrr (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True
+  Initialized                 False
+  Ready                       False
+  ContainersReady             False
+  PodScheduled                True
+Volumes:
+  kube-api-access-shsrr:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age    From               Message
+  ----    ------     ----   ----               -------
+  Normal  Scheduled  7m47s  default-scheduler  Successfully assigned default/initpod to desktop-worker
+  Normal  Pulling    7m45s  kubelet            spec.initContainers{init-ctr}: Pulling image "busybox:1.28.4"
+  Normal  Pulled     7m40s  kubelet            spec.initContainers{init-ctr}: Successfully pulled image "busybox:1.28.4" in 5.792s (5.792s including waiting). Image size: 727869 bytes.
+  Normal  Created    7m40s  kubelet            spec.initContainers{init-ctr}: Container created
+  Normal  Started    7m40s  kubelet            spec.initContainers{init-ctr}: Container started
+PS C:\Users\elphi>
+---
+
+open new shell
+to do intaractive session inside the init container, to check hostname
+
+PS C:\Users\elphi> kubectl get pods
+NAME        READY   STATUS     RESTARTS      AGE
+hello-pod   1/1     Running    8 (82m ago)   9d
+initpod     0/1     Init:0/1   0             12m
+PS C:\Users\elphi> kubectl exec -it initpod --container init-ctr -- sh
+/ # pwd
+/
+/ # ls -la
+total 48
+drwxr-xr-x    1 root     root          4096 Oct 14 01:43 .
+drwxr-xr-x    1 root     root          4096 Oct 14 01:43 ..
+drwxr-xr-x    2 root     root         12288 May 22  2018 bin
+drwxr-xr-x    5 root     root           360 Oct 14 01:43 dev
+drwxr-xr-x    1 root     root          4096 Oct 14 01:43 etc
+drwxr-xr-x    2 nobody   nogroup       4096 May 22  2018 home
+dr-xr-xr-x  332 root     root             0 Oct 14 01:43 proc
+-rw-r--r--    1 root     root            37 Oct 14 01:43 product_uuid
+drwx------    1 root     root          4096 Oct 14 01:57 root
+dr-xr-xr-x   13 root     root             0 Oct 14 01:43 sys
+drwxrwxrwt    2 root     root          4096 May 22  2018 tmp
+drwxr-xr-x    3 root     root          4096 May 22  2018 usr
+drwxr-xr-x    1 root     root          4096 Oct 14 01:43 var
+/ # cat /etc/os-released
+cat: can't open '/etc/os-released': No such file or directory
+/ # cat /etc/os-release
+cat: can't open '/etc/os-release': No such file or directory
+/ # hostname
+initpod
+/ #
+---
+
+PS C:\Users\elphi> kubectl exec initpod --container init-ctr -- hostname
+initpod
+
+--- fro shell1
+PS C:\Users\elphi> kubectl apply -f 'C:\Users\elphi\OneDrive\Desktop\u11-k8s\4.working-with-pods\0.source-code\initpod.yml'
+pod/initpod created
+PS C:\Users\elphi> kubectl get pods -o wide
+NAME        READY   STATUS     RESTARTS      AGE   IP           NODE              NOMINATED NODE   READINESS GATES
+hello-pod   1/1     Running    8 (71m ago)   9d    10.244.2.2   desktop-worker2   <none>           <none>
+initpod     0/1     Init:0/1   0             25s   10.244.1.2   desktop-worker    <none>           <none>
+PS C:\Users\elphi>  kubectl get pods --watch
+NAME        READY   STATUS     RESTARTS      AGE
+hello-pod   1/1     Running    8 (74m ago)   9d
+initpod     0/1     Init:0/1   0             3m22s
+initpod     0/1     Init:0/1   0             3m47s
+initpod     0/1     Init:0/1   0             4m58s
+hello-pod   1/1     Running    8 (76m ago)   9d
+hello-pod   1/1     Running    8 (78m ago)   9d
+initpod     0/1     Init:0/1   0             11m
+initpod     0/1     Init:0/1   0             12m
+hello-pod   1/1     Running    8 (89m ago)   10d
+hello-pod   1/1     Running    8 (90m ago)   10d
+initpod     0/1     Init:0/1   0             22m
+hello-pod   1/1     Running    8 (94m ago)   10d
+hello-pod   1/1     Running    8 (95m ago)   10d
+initpod     0/1     Init:0/1   0             25m
+initpod     0/1     Init:0/1   0             32m
+initpod     0/1     Init:0/1   0             33m
+initpod     0/1     PodInitializing   0             34m
+initpod     1/1     Running           0             35m
+hello-pod   1/1     Running           8 (107m ago)   10d
+
+-- stop watching after starting web-ctr
+initpod     0/1     PodInitializing   0             34m
+initpod     1/1     Running           0             35m
+hello-pod   1/1     Running           8 (107m ago)   10d
+hello-pod   1/1     Running           8 (108m ago)   10d
+PS C:\Users\elphi>
