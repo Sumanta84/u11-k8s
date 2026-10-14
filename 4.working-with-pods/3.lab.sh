@@ -262,3 +262,10 @@ Events:
   Normal  Created    4m24s  kubelet            spec.containers{web-ctr}: Container created
   Normal  Started    4m24s  kubelet            spec.containers{web-ctr}: Container started
 PS C:\Users\elphi>
+
+---Remotely checking container hostname 1. init-ctr, after terminated init-ctr 2. web-ctr
+PS C:\Users\elphi> kubectl exec initpod --container init-ctr -- hostname
+initpod
+PS C:\Users\elphi> kubectl exec initpod --container web-ctr -- hostname
+initpod
+PS C:\Users\elphi>
