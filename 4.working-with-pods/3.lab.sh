@@ -269,3 +269,25 @@ initpod
 PS C:\Users\elphi> kubectl exec initpod --container web-ctr -- hostname
 initpod
 PS C:\Users\elphi>
+
+--- running initsvc.yml 
+PS C:\Users\elphi> kubectl apply -f 'C:\Users\elphi\OneDrive\Desktop\u11-k8s\4.working-with-pods\0.source-code\initsvc.yml'
+service/k8sbook created
+PS C:\Users\elphi> kubectl get all
+NAME            READY   STATUS            RESTARTS       AGE
+pod/hello-pod   1/1     Running           8 (105m ago)   10d
+pod/initpod     0/1     PodInitializing   0              35m
+
+NAME                 TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
+service/k8sbook      ClusterIP   10.96.45.239   <none>        80/TCP    33s
+service/kubernetes   ClusterIP   10.96.0.1      <none>        443/TCP   17d
+PS C:\Users\elphi>
+PS C:\Users\elphi> kubectl get all
+NAME            READY   STATUS    RESTARTS       AGE
+pod/hello-pod   1/1     Running   8 (106m ago)   10d
+pod/initpod     1/1     Running   0              36m
+
+NAME                 TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
+service/k8sbook      ClusterIP   10.96.45.239   <none>        80/TCP    102s
+service/kubernetes   ClusterIP   10.96.0.1      <none>        443/TCP   17d
+PS C:\Users\elphi>
