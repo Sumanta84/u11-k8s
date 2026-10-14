@@ -179,3 +179,86 @@ initpod     1/1     Running           0             35m
 hello-pod   1/1     Running           8 (107m ago)   10d
 hello-pod   1/1     Running           8 (108m ago)   10d
 PS C:\Users\elphi>
+
+---
+after start web-ctr pod status
+
+PS C:\Users\elphi> kubectl describe pod initpod
+Name:             initpod
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             desktop-worker/172.18.0.5
+Start Time:       Wed, 14 Oct 2026 07:13:17 +0530
+Labels:           app=initializer
+Annotations:      <none>
+Status:           Running
+IP:               10.244.1.2
+IPs:
+  IP:  10.244.1.2
+Init Containers:
+  init-ctr:
+    Container ID:  containerd://db13747a0e8a7cb788cb38cbe3e10cb81fe1b2fce8a06b2aa2beec99a5886a06
+    Image:         busybox:1.28.4
+    Image ID:      docker.io/library/busybox@sha256:141c253bc4c3fd0a201d32dc1f493bcf3fff003b6df416dea4f41046e0f37d47
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      sh
+      -c
+      until nslookup k8sbook; do echo waiting for k8sbook service; sleep 1; done; echo Service found!
+    State:          Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Wed, 14 Oct 2026 07:13:24 +0530
+      Finished:     Wed, 14 Oct 2026 07:47:47 +0530
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-shsrr (ro)
+Containers:
+  web-ctr:
+    Container ID:   containerd://6bc1cc3dac274778128d1f79d5a8083e26a6d65dacf3a26ccac5cc18595bed7f
+    Image:          nigelpoulton/web-app:1.0
+    Image ID:       docker.io/nigelpoulton/web-app@sha256:201b2df1aae045c7f7fe3148e9f793e602aaf019d4afc6f65b625fe3dee6515b
+    Port:           8080/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Wed, 14 Oct 2026 07:48:56 +0530
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-shsrr (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True
+  Initialized                 True
+  Ready                       True
+  ContainersReady             True
+  PodScheduled                True
+Volumes:
+  kube-api-access-shsrr:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age    From               Message
+  ----    ------     ----   ----               -------
+  Normal  Scheduled  40m    default-scheduler  Successfully assigned default/initpod to desktop-worker
+  Normal  Pulling    40m    kubelet            spec.initContainers{init-ctr}: Pulling image "busybox:1.28.4"
+  Normal  Pulled     39m    kubelet            spec.initContainers{init-ctr}: Successfully pulled image "busybox:1.28.4" in 5.792s (5.792s including waiting). Image size: 727869 bytes.
+  Normal  Created    39m    kubelet            spec.initContainers{init-ctr}: Container created
+  Normal  Started    39m    kubelet            spec.initContainers{init-ctr}: Container started
+  Normal  Pulling    5m32s  kubelet            spec.containers{web-ctr}: Pulling image "nigelpoulton/web-app:1.0"
+  Normal  Pulled     4m24s  kubelet            spec.containers{web-ctr}: Successfully pulled image "nigelpoulton/web-app:1.0" in 1m10.441s (1m10.442s including waiting). Image size: 136820450 bytes.
+  Normal  Created    4m24s  kubelet            spec.containers{web-ctr}: Container created
+  Normal  Started    4m24s  kubelet            spec.containers{web-ctr}: Container started
+PS C:\Users\elphi>
