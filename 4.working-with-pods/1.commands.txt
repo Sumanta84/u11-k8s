@@ -39,3 +39,24 @@ kubectl get pods --watch
 ---
 now open a different shell:
 kubectl describe pod initpod
+---
+Public cloud-Linode:-
+get endpoints svc-sidecar
+kubectl get svc -o wide
+kubectl get pods -o wide
+kubectl port-forward pod/git-sync 9000:80
+---
+   1 kubectl config view
+   2 kubectl config view
+   3 kubectl config get-contexts
+   4 kubectl apply -f 'C:\Users\elphi\OneDrive\Desktop\u11-k8s\4.working-with-pods\0.source-code\initsidecar.yml'
+   5 kubectl get all -o wide
+   6 kubectl get nodes -o wide
+   8 kubectl exec -it git-sync -- sh
+   9 kubectl get pods -o wide
+  10 kubectl exec git-sync -- curl http://10.2.0.130
+  11 kubectl get nods -o wide
+  12 kubectl get nodes -o wide
+  16 kubectl describe node lke673647-997933-jz29n
+  17 kubectl get svc -o wide
+  18 curl 172.105.57.49
