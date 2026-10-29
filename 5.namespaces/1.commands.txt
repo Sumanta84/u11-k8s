@@ -42,3 +42,4 @@
   42 kubectl get --all
   43 kubectl get all
   44 kubectl get all --all-namespaces
+  45 kubectl describe node lke683040-1007982-rwt7m
