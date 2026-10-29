@@ -1,0 +1,44 @@
+1 kubectl get ns
+   2 kubecctl get leases
+   3 kubectl get leases -n default
+   4 kubectl get pods
+   5 kubectl apply -f 'C:\Users\elphi\OneDrive\Desktop\u11-k8s\4.working-with-pods\0.source-code\initsidecar.yml'
+   6 kubectl get leases -n default
+   7 kubectl get pods
+   8 kubectl get all
+   9 kubectl get leases -n default
+  10 kubectl get leases -n kube-node-lease
+  11 kubectl get pods -o wide
+  12 kubectl describe lease desktop-worker
+  13 kubectl describe lease desktop-worker -n kube-node-lease
+  14 kubectl describe lease desktop-worker -n kube-node-lease
+  15 kubectl get ns
+  16 kubectl config view --minify
+  17 kubectl describe ns default
+  18 kubectl get svc
+  19 kubectl get ns
+  20 kubectl get svc --namespace kube-system
+  21 kubectl get svc --all-namespaces
+  22 kubectl create ns hydra
+  23 kubectl get ns
+  24 kubectl apply -f 'C:\Users\elphi\OneDrive\Desktop\u11-k8s\5.namespaces\shield-ns.yml'
+  25 kubectl get ns
+  26 kubectl delete ns hydra
+  27 kubectl get ns
+  28 kubectl config get-contexts
+  29 kubectl get ns
+  30 kubectl config get-context --current --namespace
+  31 kubectl config get-contexts --current --namespace
+  32 kubectl config get-contexts --help
+  33 kubectl config get-contexts --minify
+  34 kubectl config view --minify
+  35 kubectl config set-context --current --namespace shield
+  36 kubectl config view --minify
+  37 kubectl apply -f 'C:\Users\elphi\OneDrive\Desktop\u11-k8s\5.namespaces\app.yml'
+  38 kubectl get pods
+  39 kubectl get pods -o wide
+  40 kubectl get pods -n shield
+  41 kubectl get pods -n default
+  42 kubectl get --all
+  43 kubectl get all
+  44 kubectl get all --all-namespaces
