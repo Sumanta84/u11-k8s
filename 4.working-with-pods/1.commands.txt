@@ -1,62 +1,13 @@
-export KUBECONFIG=~/.kube/config-bkp:~/.kube/tkb-kubeconfig.yaml
-kube ctl config view
-kubectl config view --flatten
-kubectl tkb-kubeconfig.yaml view
-kubectl config --help
-kubectl config view -h
-kubectl --kubeconfig ~/.kube/tkb-kubeconfig.yaml config view
-kubectl --kubeconfig --help
-kubectl edit pod hello-pod  ----XXX Not work-due to immutability XXX
----
+$ kubectl api-resources
 
-kubectl config view --flaten
-kubectl config view --flatten > ~/.kube/config
-kubectl config veiw
-rm config
-unset KUBECONFIG
-export KUBECONFIG=~/.kube/config-backup:~/.kube/tkb-kubeconfig.yaml:~/.kube/tkb2-kubeconfig.yaml
-kubectl get ns
-kubectl config get-contexts
-kubectl config use-context lke659928-ctx
-kubectl config current-context
-kubectl describe lke659928-ctx
-kubectl cluster-info
-kubectl cluster-info dump
-kubectl get nodes -o wide
-kubectl cluster-info > ~/.kube/cluster-info.txt
-kubectl explain pods
-kubectl explain pods --recursive
-kubectl explain pods --recursive | more
-kubectl explain pod.metadata.managedFields.fieldsType
-kubectl explain pod.spec.restartPolicy
-kubectl config current-context
-kubectl apply -f ./4.working-with-pods/0.source-code/pod.yaml 
-kubectl get pods
----
-kubectl apply -f initpod.yml
-kubectl get pods -o wide
-kubectl get pods --watch 
----
-now open a different shell:
-kubectl describe pod initpod
----
-Public cloud-Linode:-
-get endpoints svc-sidecar
-kubectl get svc -o wide
-kubectl get pods -o wide
-kubectl port-forward pod/git-sync 9000:80
----
-   1 kubectl config view
-   2 kubectl config view
-   3 kubectl config get-contexts
-   4 kubectl apply -f 'C:\Users\elphi\OneDrive\Desktop\u11-k8s\4.working-with-pods\0.source-code\initsidecar.yml'
-   5 kubectl get all -o wide
-   6 kubectl get nodes -o wide
-   8 kubectl exec -it git-sync -- sh
-   9 kubectl get pods -o wide
-  10 kubectl exec git-sync -- curl http://10.2.0.130
-  11 kubectl get nods -o wide
-  12 kubectl get nodes -o wide
-  16 kubectl describe node lke673647-997933-jz29n
-  17 kubectl get svc -o wide
-  18 curl 172.105.57.49
+In Power-shell:-
+$  Get-Content (Get-PSReadlineOption).HistorySavePath -Tail 25
+
+kubectl explain deployment.strategy.type
+kubectl explain deployment.strategy
+kubectl explain deployment.spec.strategy.type
+kubectl get congif
+kubectl get config
+kubectl apply -f "C:\Users\elphi\OneDrive\Desktop\u11-k8s\6.deployment\deploy.yml"
+kubectl get all
+kubectl describe deployment.apps/hello-deploy
